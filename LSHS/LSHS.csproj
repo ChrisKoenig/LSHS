@@ -93,6 +93,7 @@
     </Compile>
     <Compile Include="Converters\MonthNumberToNameConverter.cs" />
     <Compile Include="Helpers\RssHelper.cs" />
+    <Compile Include="Helpers\StringExtensions.cs" />
     <Compile Include="Models\CalendarItem.cs" />
     <Compile Include="Models\Tweet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

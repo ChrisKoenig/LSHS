@@ -52,32 +52,53 @@ public class CalendarFeedHandler : IHttpHandler
         if (!Urls.ContainsKey(key))
             return;
         var url = Urls[key];
-        var calendar = myService.Get(url);
+        try
+        {
+            var calendar = myService.Get(url);
 
-        var entries = from entry in calendar.Feed.Entries
-                      select entry as EventEntry;
+            var entries = from entry in calendar.Feed.Entries
+                          select entry as EventEntry;
 
-        Response.Clear();
-        Response.ContentType = "text/xml";
+            Response.Clear();
+            Response.ContentType = "text/xml";
 
-        XDocument document = new XDocument(
-            new XDeclaration("1.0", "utf-8", null),
-            new XElement("rss",
-                 new XElement("channel",
-                     new XElement("title", String.Format("Lone Star High School - {0} Calendar", key.ToUpper())),
-                     new XElement("link", url),
-                     new XElement("description", "Real RSS version of a Google Calendar feed as they obviously don't know how to build one"),
-                    from entry in entries
-                    where entry.Times.Count > 0
-                    orderby entry.Times[0].StartTime
-                    select new XElement("item",
-                       new XElement("title", entry.Title.Text),
-                       new XElement("description", entry.Content.Content),
-                       new XElement("pubDate", entry.Times[0].StartTime.ToString("ddd, dd MMM yyyy H:mm:ss K")),
-                       new XElement("link", entry.Links[0].HRef.Content)
-                    ),
-                 new XAttribute("version", "2.0"))));
-        document.Save(Response.Output);
+            XDocument document;
+
+            if (entries.Count() == 0)
+            {
+                document = new XDocument(
+                    new XDeclaration("1.0", "utf-8", null),
+                    new XElement("rss",
+                         new XElement("channel",
+                             new XElement("title", String.Format("Lone Star High School - {0} Calendar", key.ToUpper())),
+                             new XElement("link", url),
+                             new XElement("description", "Real RSS version of a Google Calendar feed as they obviously don't know how to build one"),
+                             new XAttribute("version", "2.0"))));
+            }
+            else
+            {
+                document = new XDocument(
+                    new XDeclaration("1.0", "utf-8", null),
+                    new XElement("rss",
+                         new XElement("channel",
+                             new XElement("title", String.Format("Lone Star High School - {0} Calendar", key.ToUpper())),
+                             new XElement("link", url),
+                             new XElement("description", "Real RSS version of a Google Calendar feed as they obviously don't know how to build one"),
+                            from entry in entries
+                            where entry.Times.Count > 0
+                            orderby entry.Times[0].StartTime
+                            select new XElement("item",
+                               new XElement("title", entry.Title.Text),
+                               new XElement("description", entry.Content.Content),
+                               new XElement("pubDate", entry.Times[0].StartTime.ToString("ddd, dd MMM yyyy H:mm:ss K")),
+                               new XElement("link", entry.Links[0].HRef.Content)
+                            ),
+                         new XAttribute("version", "2.0"))));
+            }
+
+            document.Save(Response.Output);
+        }
+        catch { }
     }
 
     public bool IsReusable

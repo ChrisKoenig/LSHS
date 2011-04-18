@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using LSHS.Helpers;
 
 namespace LSHS.Converters
 {
@@ -16,8 +17,8 @@ namespace LSHS.Converters
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            //return DateTime.Parse(value.ToString()).ToString("MMM");
-            return DateTime.Now.ToString("MMM");
+            DateTime dtm = (DateTime)value;
+            return dtm.ToString("MMM");
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)

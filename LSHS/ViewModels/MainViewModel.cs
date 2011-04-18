@@ -13,7 +13,8 @@ namespace LSHS.ViewModels
     {
         private static string RSS_Director = "http://twitter.com/statuses/user_timeline/118956202.rss";
         private static string RSS_Band = "http://lshs.chriskoenig.net/band.calendar";
-        private static string RSS_Guard = "http://lshs.chriskoenig.net/guard.calendar";
+        private static string RSS_Guard = "http://localhost:21743/guard.calendar";
+        //private static string RSS_Guard = "http://lshs.chriskoenig.net/guard.calendar";
         private static string RSS_FriscoISD = "http://twitter.com/statuses/user_timeline/24252117.rss";
 
         public MainViewModel()
@@ -34,7 +35,7 @@ namespace LSHS.ViewModels
                 // Code runs "for real": Connect to service, etc...
                 ThreadPool.QueueUserWorkItem((action) => RssHelper.LoadTwitterFeedIntoListBox(DirectorTweets, RSS_Director));
                 ThreadPool.QueueUserWorkItem((action) => RssHelper.LoadCalendarFeedIntoListBox(BandEvents, RSS_Band));
-                //ThreadPool.QueueUserWorkItem((action) => RssHelper.LoadCalendarFeedIntoListBox(GuardEvents, RSS_Guard));
+                ThreadPool.QueueUserWorkItem((action) => RssHelper.LoadCalendarFeedIntoListBox(GuardEvents, RSS_Guard));
                 ThreadPool.QueueUserWorkItem((action) => RssHelper.LoadTwitterFeedIntoListBox(DistrictFeed, RSS_FriscoISD));
             }
         }

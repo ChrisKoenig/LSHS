@@ -35,7 +35,6 @@
                                HorizontalAlignment="Left"
                                VerticalAlignment="Top"
                                Grid.Row="1"
-                               Margin="8,-0.001,0,0"
                                TextWrapping="Wrap"
                                FontFamily="Segoe WP SemiLight" />
                 </Grid>
@@ -82,14 +81,14 @@
                             </LinearGradientBrush>
                         </Rectangle.Fill>
                     </Rectangle>
-                    <TextBlock FontSize="12"
+                    <TextBlock FontSize="18"
                                Text="{Binding EventDateStart, Converter={StaticResource MonthNumberToNameConverter}}"
-                               HorizontalAlignment="Left"
+                               HorizontalAlignment="Center"
                                VerticalAlignment="Top"
                                Foreground="{StaticResource RangerBlue}"
                                Margin="1,-3,0,0"
                                Padding="2,2,0,0" />
-                    <TextBlock HorizontalAlignment="Right"
+                    <TextBlock HorizontalAlignment="Center"
                                VerticalAlignment="Bottom"
                                FontSize="32"
                                Foreground="{StaticResource RangerBlue}"

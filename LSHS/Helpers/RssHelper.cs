@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Xml.Linq;
@@ -19,13 +20,15 @@ namespace LSHS.Helpers
                 if (args.Error == null)
                 {
                     var xml = args.Result;
+                    if (xml.Length == 0)
+                        return;
                     XDocument doc = XDocument.Parse(xml);
                     var tweets = from item in doc.Root.Element("channel").Elements("item")
                                  select new Tweet()
                                  {
                                      Message = item.Element("title").Value,
                                      Permalink = item.Element("link").Value,
-                                     PublishDate = ParseTwitterDateTime(item.Element("pubDate").Value),
+                                     PublishDate = item.Element("pubDate").Value.ParseDateTime(),
                                      UserName = "",
                                  };
                     DispatcherHelper.CheckBeginInvokeOnUI(() =>
@@ -53,13 +56,15 @@ namespace LSHS.Helpers
                 if (args.Error == null)
                 {
                     var xml = args.Result;
+                    if (xml.Length == 0)
+                        return;
                     XDocument doc = XDocument.Parse(xml);
                     var events = from item in doc.Root.Element("channel").Elements("item")
                                  select new CalendarItem()
                                  {
                                      Details = item.Element("description").Value,
                                      Slug = item.Element("title").Value,
-                                     EventDateStart = ParseTwitterDateTime(item.Element("pubDate").Value),
+                                     EventDateStart = item.Element("pubDate").Value.ParseDateTime(),
                                      Link = item.Element("link").Value,
                                  };
                     DispatcherHelper.CheckBeginInvokeOnUI(() =>
@@ -76,11 +81,6 @@ namespace LSHS.Helpers
                 }
             };
             client.DownloadStringAsync(new Uri(url, UriKind.Absolute));
-        }
-
-        private static DateTime ParseTwitterDateTime(string dtm)
-        {
-            return DateTime.Now;
         }
     }
 }
