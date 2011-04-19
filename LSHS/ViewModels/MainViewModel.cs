@@ -13,8 +13,7 @@ namespace LSHS.ViewModels
     {
         private static string RSS_Director = "http://twitter.com/statuses/user_timeline/118956202.rss";
         private static string RSS_Band = "http://lshs.chriskoenig.net/band.calendar";
-        private static string RSS_Guard = "http://localhost:21743/guard.calendar";
-        //private static string RSS_Guard = "http://lshs.chriskoenig.net/guard.calendar";
+        private static string RSS_Guard = "http://lshs.chriskoenig.net/guard.calendar";
         private static string RSS_FriscoISD = "http://twitter.com/statuses/user_timeline/24252117.rss";
 
         public MainViewModel()
