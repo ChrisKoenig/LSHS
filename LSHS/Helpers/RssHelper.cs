@@ -24,7 +24,7 @@ namespace LSHS.Helpers
                         return;
                     XDocument doc = XDocument.Parse(xml);
                     var tweets = from item in doc.Root.Element("channel").Elements("item")
-                                 select new Tweet()
+                                 select new Tweet
                                  {
                                      Message = item.Element("title").Value,
                                      Permalink = item.Element("link").Value,
@@ -56,24 +56,25 @@ namespace LSHS.Helpers
                 if (args.Error == null)
                 {
                     var xml = args.Result;
-                    if (xml.Length == 0)
-                        return;
-                    XDocument doc = XDocument.Parse(xml);
-                    var events = from item in doc.Root.Element("channel").Elements("item")
-                                 select new CalendarItem()
-                                 {
-                                     Details = item.Element("description").Value,
-                                     Slug = item.Element("title").Value,
-                                     EventDateStart = item.Element("pubDate").Value.ParseDateTime(),
-                                     Link = item.Element("link").Value,
-                                 };
-                    DispatcherHelper.CheckBeginInvokeOnUI(() =>
+                    if (xml.Length > 0)
                     {
-                        foreach (var @event in events)
+                        XDocument doc = XDocument.Parse(xml);
+                        var events = from item in doc.Root.Element("channel").Elements("item")
+                                     select new CalendarItem()
+                                     {
+                                         Details = item.Element("description").Value,
+                                         Slug = item.Element("title").Value,
+                                         EventDateStart = item.Element("pubDate").Value.ParseDateTime(),
+                                         Link = item.Element("link").Value,
+                                     };
+                        DispatcherHelper.CheckBeginInvokeOnUI(() =>
                         {
-                            Items.Add(@event);
-                        }
-                    });
+                            foreach (var @event in events)
+                            {
+                                Items.Add(@event);
+                            }
+                        });
+                    }
                 }
                 else
                 {
