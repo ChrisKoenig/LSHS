@@ -4,7 +4,9 @@ using System.Threading;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using LSHS.Helpers;
+using LSHS.Messages;
 using LSHS.Models;
+using Microsoft.Phone.Net.NetworkInformation;
 using Microsoft.Phone.Tasks;
 
 namespace LSHS.ViewModels
@@ -18,11 +20,20 @@ namespace LSHS.ViewModels
 
         public MainViewModel()
         {
+            MessengerInstance.Register<RefreshDataMessage>(this, (message) => RefreshData());
+
             LaunchBrowserCommand = new RelayCommand<string>((url) =>
             {
-                WebBrowserTask task = new WebBrowserTask();
-                task.URL = url;
-                task.Show();
+                if (NetworkInterface.GetIsNetworkAvailable())
+                {
+                    WebBrowserTask task = new WebBrowserTask();
+                    task.URL = url;
+                    task.Show();
+                }
+                else
+                {
+                    MessengerInstance.Send<NetworkUnavailableMessage>(new NetworkUnavailableMessage());
+                }
             });
 
             if (IsInDesignMode)
@@ -32,10 +43,22 @@ namespace LSHS.ViewModels
             else
             {
                 // Code runs "for real": Connect to service, etc...
+                RefreshData();
+            }
+        }
+
+        private void RefreshData()
+        {
+            if (NetworkInterface.GetIsNetworkAvailable())
+            {
                 ThreadPool.QueueUserWorkItem((action) => RssHelper.LoadTwitterFeedIntoListBox(DirectorTweets, RSS_Director));
                 ThreadPool.QueueUserWorkItem((action) => RssHelper.LoadCalendarFeedIntoListBox(BandEvents, RSS_Band));
                 ThreadPool.QueueUserWorkItem((action) => RssHelper.LoadCalendarFeedIntoListBox(GuardEvents, RSS_Guard));
                 ThreadPool.QueueUserWorkItem((action) => RssHelper.LoadTwitterFeedIntoListBox(DistrictFeed, RSS_FriscoISD));
+            }
+            else
+            {
+                MessengerInstance.Send<NetworkUnavailableMessage>(new NetworkUnavailableMessage());
             }
         }
 

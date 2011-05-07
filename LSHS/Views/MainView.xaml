@@ -225,7 +225,7 @@
                 <Grid>
                     <Grid.Background>
                         <SolidColorBrush Color="White"
-                                         Opacity=".2" />
+                                         Opacity=".7" />
                     </Grid.Background>
                     <Grid.RowDefinitions>
                         <RowDefinition />
@@ -248,7 +248,7 @@
                 <Grid>
                     <Grid.Background>
                         <SolidColorBrush Color="White"
-                                         Opacity=".2" />
+                                         Opacity=".7" />
                     </Grid.Background>
                     <Grid.RowDefinitions>
                         <RowDefinition />
@@ -269,7 +269,7 @@
                 <Grid>
                     <Grid.Background>
                         <SolidColorBrush Color="White"
-                                         Opacity=".2" />
+                                         Opacity=".7" />
                     </Grid.Background>
                     <Grid.RowDefinitions>
                         <RowDefinition />
@@ -290,7 +290,7 @@
                 <Grid>
                     <Grid.Background>
                         <SolidColorBrush Color="White"
-                                         Opacity=".2" />
+                                         Opacity=".7" />
                     </Grid.Background>
                     <Grid.RowDefinitions>
                         <RowDefinition />
@@ -309,4 +309,12 @@
         </controls:Panorama>
     </Grid>
 
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar>
+            <shell:ApplicationBarIconButton x:Name="RefreshButton"
+                                            Text="Refresh"
+                                            Click="RefreshButton_Click"
+                                            IconUri="/Images/appbar.refresh.rest.png" />
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
 </phone:PhoneApplicationPage>

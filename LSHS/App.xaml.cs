@@ -4,6 +4,7 @@ using System.Windows.Navigation;
 using GalaSoft.MvvmLight.Threading;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using Microsoft.Phone.Net.NetworkInformation;
 
 namespace LSHS
 {
@@ -36,6 +37,7 @@ namespace LSHS
                 // which shows areas of a page that are being GPU accelerated with a colored overlay.
                 //Application.Current.Host.Settings.EnableCacheVisualization = true;
             }
+
 
             DispatcherHelper.Initialize();
 

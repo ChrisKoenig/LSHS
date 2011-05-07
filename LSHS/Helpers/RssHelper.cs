@@ -4,7 +4,9 @@ using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Xml.Linq;
+using GalaSoft.MvvmLight.Messaging;
 using GalaSoft.MvvmLight.Threading;
+using LSHS.Messages;
 using LSHS.Models;
 
 namespace LSHS.Helpers
@@ -41,7 +43,7 @@ namespace LSHS.Helpers
                 }
                 else
                 {
-                    throw args.Error;
+                    Messenger.Default.Send<ErrorMessage>(new ErrorMessage(args.Error));
                 }
             };
             client.DownloadStringAsync(new Uri(url, UriKind.Absolute));
@@ -78,7 +80,7 @@ namespace LSHS.Helpers
                 }
                 else
                 {
-                    throw args.Error;
+                    Messenger.Default.Send<ErrorMessage>(new ErrorMessage(args.Error));
                 }
             };
             client.DownloadStringAsync(new Uri(url, UriKind.Absolute));

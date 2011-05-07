@@ -94,6 +94,9 @@
     <Compile Include="Converters\MonthNumberToNameConverter.cs" />
     <Compile Include="Helpers\RssHelper.cs" />
     <Compile Include="Helpers\StringExtensions.cs" />
+    <Compile Include="Messages\ErrorMessage.cs" />
+    <Compile Include="Messages\NetworkUnavailableMessage.cs" />
+    <Compile Include="Messages\RefreshDataMessage.cs" />
     <Compile Include="Models\CalendarItem.cs" />
     <Compile Include="Models\Tweet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -120,20 +123,17 @@
     <Content Include="ApplicationIcon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Images\logo.jpg">
+    <Content Include="Images\appbar.refresh.rest.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Images\logo.png">
+    <Content Include="Images\logo.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="SplashScreenImage.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Infrastructure\" />
-    <Folder Include="Messages\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Page Include="Views\MainView.xaml">
       <SubType>Designer</SubType>
